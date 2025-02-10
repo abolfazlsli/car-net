@@ -8,12 +8,12 @@ const InputC = ({text , placeholder , onChange , value , type}) => {
             {text}
         </h3>
         {
-            type === "passowrd" ? 
+            type === "password" ? 
             <div className="w-[100%] relative">
                 <Button className="absolute rounded-l-full left-[0px] bg-amber-500">
                     <Eye/>
                 </Button>
-                <Input type={"passowrd"} className="text-right rounded-full outline-hidden " placeholder={placeholder} onChange={onChange} value={value} />
+                <Input type={type} className="text-right rounded-full outline-hidden " placeholder={placeholder} onChange={onChange} value={value} />
             </div>
              :<Input type={type} className="text-right rounded-full outline-hidden" placeholder={placeholder} onChange={onChange} value={value} />
         }
