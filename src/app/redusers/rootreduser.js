@@ -1,9 +1,11 @@
 import UserHandler from "./Users";
+import  handelSingUpForm from "./forms/regDaata";
 import { combineReducers } from "redux";
 
 const rootReduser = combineReducers(
     {
-        userinfo : UserHandler
+        userinfo : UserHandler ,
+        regData : handelSingUpForm
     }
 )
 

@@ -9,11 +9,31 @@ import "../../../../app/fonts/style.css"
 import InputC from "../../input-c";
 import { useEffect, useState } from "react";
 import ButtonC from "../../button-c";
+import { useSelector , useDispatch } from "react-redux";
+import chnagedata from "@/app/actions/changedata";
+import { network } from "@/app/apiHandler/network";
+
+
 
 const LoginForm = () => {
     const router = useRouter();
     const [open , setOpen] = useState(true)
     const [load , setLoad] = useState(false)
+    const select = useSelector((state) => state.regData)
+    const dispatch = useDispatch()
+
+    const handelSendForm = () => {
+        setLoad(true)
+        let form = new FormData()
+        network.post(
+            form
+        ).then(
+            res => {
+                console.log(res)
+                setLoad(false)
+            }
+        )
+    }
     const handleClose = () => {
         router.back()
         
@@ -26,8 +46,8 @@ const LoginForm = () => {
                         <h1 className="text-center">ورود</h1>
                     </DialogTitle>
                     <DialogDescription>
-                        <InputC type={"text"} placeholder={"شماره تلفن یا نام کاربری"} text={"شماره تلفن"}/>
-                        <InputC type={"password"} placeholder={"رمزعبور"} text={"رمز"}/>
+                        <InputC type={"text"} placeholder={"شماره تلفن یا نام کاربری"} text={"شماره تلفن"} value={select.phone} onChange={e => {dispatch(chnagedata({phone : e.target.value}))}} />
+                        <InputC type={"password"} placeholder={"رمزعبور"} text={"رمز"} value={select.password} onChange={e => {dispatch(chnagedata({password : e.target.value}))}}/>
                         <div className="flex items-center space-x-2 justify-end p-[10px]">
                             <div className="grid gap-1.5 leading-none">
                                 <label
@@ -42,7 +62,7 @@ const LoginForm = () => {
                             </div>
                             <Checkbox id="terms" />
                         </div>
-                        <ButtonC className="bg-amber-500 w-[100%] rounded-full mt-[10px]" text="ورود" load={load} />
+                        <ButtonC className="bg-amber-500 w-[100%] rounded-full mt-[10px]" text="ورود" load={load} onClick={handelSendForm} />
                         <p className="mt-[10px]">
                             حساب ندارید ؟ <Link href={"/register"} className="text-amber-500 cursor-pointer">
                                 ساخت حساب
