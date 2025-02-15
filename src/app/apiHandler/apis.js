@@ -6,3 +6,5 @@ export const LoginUser = (data) =>
 export const RegisterUser = (data) => 
     network.post("/users/add" , data)
 
+export const CheckToken = (data) =>
+    network.post("/tokens/check" , data)

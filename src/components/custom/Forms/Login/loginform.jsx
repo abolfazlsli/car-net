@@ -12,6 +12,8 @@ import ButtonC from "../../button-c";
 import { useSelector , useDispatch } from "react-redux";
 import chnagedata from "@/app/actions/changedata";
 import { network } from "@/app/apiHandler/network";
+import { LoginUser } from "@/app/apiHandler/apis";
+import { toast, ToastContainer } from "react-toastify";
 
 
 
@@ -20,19 +22,52 @@ const LoginForm = () => {
     const [open , setOpen] = useState(true)
     const [load , setLoad] = useState(false)
     const select = useSelector((state) => state.regData)
+    const userSelect = useSelector((state) => state.userinfo)
     const dispatch = useDispatch()
 
     const handelSendForm = () => {
         setLoad(true)
-        let form = new FormData()
-        network.post(
-            form
-        ).then(
-            res => {
-                console.log(res)
-                setLoad(false)
+        let data = {
+            phone : select.phone , 
+            password : select.password
+        }
+       LoginUser(data).then(
+        res => {
+            console.log(res)
+            localStorage.setItem("token" , res.data.token)
+            localStorage.setItem("name" , res.data.name)
+            dispatch({
+                type:"CHANGE_NAME_USERDATA" , payload : res.data.name
+            })
+            dispatch({
+                type:"CHANGE_TOKEN_USERDATA" , payload : res.data.token
+            })
+            toast.success(
+                "ورود با موفقیت انجام شد"
+            )
+            setLoad(false)
+            setTimeout(() => {
+                router.push("/")
+                setOpen(false)
+                
+            } , 5000)
+            
+        }
+       ).catch(
+        err => {
+            console.log(err)
+            if (err.response.data.error === "invalid user"){
+                toast.warn(
+                    "رمز عبور یا نام کاربری نا درست"
+                )
             }
-        )
+            else{
+                toast.error(
+                    "مشکلی پیش امده"
+                )
+            }
+        }
+       )
     }
     const handleClose = () => {
         router.back()
@@ -69,6 +104,7 @@ const LoginForm = () => {
                             </Link>
                         </p>                    
                     </DialogDescription>
+                    <ToastContainer/>
                 </DialogHeader>
             </DialogContent>
         </Dialog>

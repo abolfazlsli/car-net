@@ -19,6 +19,9 @@ import { DialogClose } from "@radix-ui/react-dialog";
 const GetPhonePass = () => {
     const router = useRouter()
     const select = useSelector((state) => state.regData)
+    const userSelect = useSelector((state) => state.userinfo)
+    const [roles , setRoles] = useState(false)
+    const [open , setOpen] = useState(true)
     const dispatch = useDispatch()
     const phoneCloseHandler = () => {
         router.back()
@@ -29,16 +32,47 @@ const GetPhonePass = () => {
             select.lastname.length ===  0 ? toast.warn("لطفا نام خانوادگی خود را وارد کنید") : send = true
             select.phone.length === 0 ? toast.warn("لطفا شماره خود را وارد کنید") : send = true
             select.password.length === 0 ? toast.warn("لطفا رمزعبور خود را وارد کنید") : send = true
-            if (send) {
+            if (send && roles) {
                 RegisterUser(select).then(
                     res => {
                         console.log(res)
+                        localStorage.setItem("token" , res.data.apidata.token)
+                        localStorage.setItem("name" , res.data.apidata.name)
+                        dispatch({
+                            type:"CHANGE_NAME_USERDATA" , payload : "test"
+                        })
+                        toast.success(
+                            "ثبتنام موفق بود"
+                        )
+                        setTimeout(
+                            () => {
+                                setOpen(false)
+                                router.push("/")
+                                router.refresh()
+                            } , 5000
+                        )
+                    }
+                ).catch(
+                    err => {
+                        if (err.response.data.error == "repuser"){
+                            toast.error(
+                                "شماره تلفن تکراری است "
+                            )
+                        }
+                        else{
+                            toast.error(
+                                "سیستم موقت از دسترس خارج شده"
+                            )
+                        }
                     }
                 )
             }
+            else{
+                toast.warn("با قوانین موافقید ؟")
+            }
         }
         return (
-            <Dialog defaultOpen onOpenChange={phoneCloseHandler} >
+            <Dialog defaultOpen onOpenChange={phoneCloseHandler} open ={open}>
             <DialogContent>
             <DialogHeader>
             <DialogTitle>
@@ -59,7 +93,7 @@ const GetPhonePass = () => {
                             میتوانید قوانین و شرایط را از <Link className="text-amber-500" href={"/"}>اینجا </Link> مشاهده کنید
                         </p>
                     </div>
-                    <Checkbox id="terms" />
+                    <Checkbox id="terms"  onCheckedChange={e => {setRoles(!roles)}} />
                 </div>
                <div className="flex">
                     <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px]" onClick={sendHandler} >

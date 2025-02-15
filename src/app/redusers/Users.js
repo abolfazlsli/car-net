@@ -1,7 +1,11 @@
-import { token } from "./data"
+import { token , name } from "./data"
+import { tokenvalidation } from "../controlers/functions"
+
+
+tokenvalidation()
 
 const userInfo = {
-    name : undefined ,
+    name : name ,
     role : undefined , 
     username : undefined,
     token : token
@@ -9,10 +13,15 @@ const userInfo = {
 
 const UserHandler = (state = userInfo , actions) => {
     switch(actions.type) {
-        case "CHANGE_NAME" : 
+        case "CHANGE_NAME_USERDATA" : 
             return {
                 ...state , 
                 name : actions.payload
+            }
+        case "CHANGE_TOKEN_USERDATA":
+            return {
+                ...state , 
+                token : actions.payload
             }
         case "CHNAGE_ROLE" : 
             return {

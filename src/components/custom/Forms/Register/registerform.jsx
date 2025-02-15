@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import chnagedata from "@/app/actions/changedata";
 import { useSelector , useDispatch } from "react-redux";
-
+import { toast, ToastContainer } from "react-toastify";
 
 const RegisterForm = () => {
     const [open , setOpen] = useState(true)
@@ -22,13 +22,22 @@ const RegisterForm = () => {
     const handleClose = () => {
         router.back()
     }
-    const getphoneHandler = () => {
-        setGetphone(true)
-        setOpen(false)
-    }
-    const phoneCloseHandler = () => {
-        setGetphone(false)
-        setOpen(true)
+    
+    const nextStep = () => {
+        if (select.name.length === 0 || select.name.replaceAll(" " , "") === ""){
+            toast.warn(
+                "نام را وارد کنید"
+            )
+        }
+        else if (select.lastname.length === 0 || select.lastname.replaceAll(" " , "") === ""){
+            toast.warn(
+                "نام خانوادگی را وارد کنید"
+            )
+        }
+        else{
+            router.push("/getphonepass")
+        }
+
     }
    
     return (
@@ -43,8 +52,9 @@ const RegisterForm = () => {
             <DialogDescription>
             <InputC type={"text"} placeholder={"نام"} text={"نام"} value={select.name} onChange={e => {dispatch(chnagedata({name : e.target.value}))}} />
             <InputC type={"text"} placeholder={"نام خانوادگی"} text={"نام خانوادگی"} value={select.lastname} onChange={e => {dispatch(chnagedata({lastname : e.target.value}))}} />
-                <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px]" onClick={getphoneHandler}>
-                    <Link href={"/getphonepass"}> قدم بعد </Link>
+                <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px]" onClick={nextStep}>
+                    {/* <Link href={"/getphonepass"}>  </Link> */}
+                    قدم بعد
                 </Button>
                 <p className="mt-[10px]">
                     حساب دارید ؟ <Link href={"/login"} className="text-amber-500 cursor-pointer">
@@ -53,6 +63,7 @@ const RegisterForm = () => {
                 </p>
             </DialogDescription>
         </DialogHeader>
+        <ToastContainer/>
         </DialogContent>
     </Dialog>
     </>
