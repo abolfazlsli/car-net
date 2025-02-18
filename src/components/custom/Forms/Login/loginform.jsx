@@ -104,7 +104,6 @@ const LoginForm = () => {
                             </Link>
                         </p>                    
                     </DialogDescription>
-                    <ToastContainer/>
                 </DialogHeader>
             </DialogContent>
         </Dialog>

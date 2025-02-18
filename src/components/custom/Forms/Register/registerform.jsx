@@ -63,7 +63,6 @@ const RegisterForm = () => {
                 </p>
             </DialogDescription>
         </DialogHeader>
-        <ToastContainer/>
         </DialogContent>
     </Dialog>
     </>

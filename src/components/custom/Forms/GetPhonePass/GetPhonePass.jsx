@@ -110,7 +110,6 @@ const GetPhonePass = () => {
                 </p>
             </DialogDescription>
           </DialogHeader>
-                <ToastContainer stacked  />
         </DialogContent>
 
       </Dialog>

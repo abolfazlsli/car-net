@@ -33,6 +33,13 @@ const UserHandler = (state = userInfo , actions) => {
                 ...state , 
                 username : actions.payload
             }
+        case "CLEAR_USER_DATA" : 
+        return {
+            name : name ,
+            role : undefined , 
+            username : undefined,
+            token : token
+        }
         default : 
         return state
     }
