@@ -8,3 +8,9 @@ export const RegisterUser = (data) =>
 
 export const CheckToken = (data) =>
     network.post("/tokens/check" , data)
+
+export const GetMe = (data) => 
+    network.post("/users/me" , data)
+
+export const CheckUsernName = (data) =>
+    network.post("/check/user/" , data)

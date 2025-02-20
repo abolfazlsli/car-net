@@ -21,9 +21,9 @@ const HeaderD = () => {
                     </Button>
                 </div> 
                 <Suspense fallback={<p>Loading...</p>}>
-                <div className="absolute right-10 flex justify-start items-center">
-                    <div className="pr-[30px] flex flex-col justify-start items-end">
-                        <h1 className="text-[20px]">
+                <div className="absolute right-[5px] md:top-5  md:right-10 flex justify-start items-center">
+                    <div className="pr-[15px]  md:pr-[30px] flex flex-col justify-start items-end">
+                        <h1 className=" text-[15px] md:text-[20px]">
                            سلام {userinfo.name}
                         </h1>
                         {
@@ -32,7 +32,7 @@ const HeaderD = () => {
                         
                     </div>
                     <div className="rounded-full bg-white  shadow-md border-[5px] border-[#f8e5a0]">
-                        <Person className="w-[150px] h-[150px] text-[#f8e5a0]"/>
+                        <Person className=" w-[100px] h-[100px] md:w-[150px] md:h-[150px] text-[#f8e5a0]"/>
                     </div>
                     
                 </div>
