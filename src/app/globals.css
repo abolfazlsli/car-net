@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+.defaulbg{
+  background-image: url("../components/custom/Header/assets/Union.png");
+  background-position: center;
+  background-size: cover;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
