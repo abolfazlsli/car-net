@@ -10,7 +10,7 @@ export default function UserPage(){
         <> 
         <div className="md:pl-[30px] p-[10px] pt-[80px]">
             <Tabs defaultValue={activetab} onValueChange={setTab}>
-                <TabsList className=" w-[100%] md:w-[85%] bg-[white] shadow-md overflow-scroll justify-start">
+                <TabsList className=" w-[100%] md:w-[85%] bg-[white] shadow-md md:overflow-auto overflow-scroll justify-start">
                     <TabsTrigger value = "userinfo" className={`w-[100px] rounded-2xl ${activetab === "userinfo" ? " !bg-amber-100" : ""} `}>
                         <h1>
                             اطلاعات کاربر

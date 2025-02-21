@@ -1,3 +1,4 @@
+import { token } from "../redusers/data";
 import { network } from "./network";
 
 export const LoginUser = (data) => 
@@ -13,4 +14,7 @@ export const GetMe = (data) =>
     network.post("/users/me" , data)
 
 export const CheckUsernName = (data) =>
-    network.post("/check/user/" , data)
+    network.post("/users/check/username" , data)
+
+export const EditUserInfo = (data) => 
+    network.post("/users/edituser" , data)
