@@ -12,12 +12,26 @@ import { token } from "@/app/redusers/data"
 
 const UserInfo = () => {
     const [me , setMe] = useState()
+    const [uname , setUname] = useState()
     const {userinfo} = useSelector((state) => state)
     const userNameHandler = (data) => (
         CheckUsernName(data)
     )
     const sendEdits = () => {
         let sending = false
+        if(me.username === uname){
+            let data = me
+            data.token = token
+            console.log(data)
+            EditUserInfo(data).then(
+                res => {
+                    toast.success(
+                        "اطلاعات با موفقیت تغیر کرد"
+                    )
+                }
+            )
+        }
+        else {
         userNameHandler(me).then(
             res => {
                 console.log(res.data.data)
@@ -38,6 +52,7 @@ const UserInfo = () => {
             }
         )
     }
+    }
     const PageDataHandler = (data) => {
         setMe(
             {
@@ -54,6 +69,7 @@ const UserInfo = () => {
             res => {
                 console.log(res)
                 setMe(res.data)
+                setUname(res.data.username)
             }
         ).catch(
             err => {toast.error("مشکلی پیش اومده :)")}
