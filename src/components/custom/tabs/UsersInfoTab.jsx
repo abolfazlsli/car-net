@@ -99,15 +99,10 @@ const UserInfo = () => {
                     </div>
                 </div>
                 <div className="flex justify-between flex-col md:flex-row">
-                <div className="m-[5px] w-[90%] md:w-[50%]">
-                        <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px] ml-[5px]" onClick={sendEdits}>
-                            ثبت
-                        </Button>
-                    </div>
-                    <div className="m-[5px] w-[90%] md:w-[50%]">
-                        <Button className="bg-amber-300 w-[100%] rounded-full mt-[20px] ml-[5px]">
-                            لغو
-                        </Button>
+                    <div className="m-[5px] w-[90%] md:w-[100%]">
+                            <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px] ml-[5px]" onClick={sendEdits}>
+                                ثبت
+                            </Button>
                     </div>
                 </div>
                 </div>

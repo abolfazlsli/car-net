@@ -25,13 +25,14 @@ import { toast, ToastContainer } from "react-toastify"
 
 
 
+
 const Header = () => {
     const userinfo = useSelector((state) => state.userinfo)
     const [logout , setLogout] = useState(false)
     const dispatch = useDispatch()
     return (
         <>
-            <div className="flex justify-between p-[20px] shadow-md bg-white w-[100%]">
+            <div className="flex justify-between p-[15px] shadow-md bg-white w-[100%]">
                 <div className="">
                     {userinfo.token ?
                     <>
@@ -110,6 +111,7 @@ const Header = () => {
                        }
                     
                 </div>
+                
                 <ToastContainer/>
             </div>
         </>

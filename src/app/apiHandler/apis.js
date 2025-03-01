@@ -18,3 +18,6 @@ export const CheckUsernName = (data) =>
 
 export const EditUserInfo = (data) => 
     network.post("/users/edituser" , data)
+
+export const GetActivty = (data) => 
+    network.post("/users/send/activiy" , data)

@@ -1,4 +1,6 @@
 'use client'
+import Seciurty from "@/components/custom/tabs/Seciurty"
+import UserActivity from "@/components/custom/tabs/UserActivity"
 import UserInfo from "@/components/custom/tabs/UsersInfoTab"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
@@ -41,7 +43,7 @@ export default function UserPage(){
                     <UserInfo/>
                 </TabsContent>
                 <TabsContent className=" w-[100%] h-[100%] md:w-[85%] mt-[10px] bg-[white] shadow-xl md:h-[440px] p-[15px] rounded-sm" value="useractivity">
-                    useractivity
+                    <UserActivity/>
                 </TabsContent>
                 <TabsContent value="saved" className=" w-[100%] h-[100%] md:w-[85%] mt-[10px] bg-[white] shadow-xl md:h-[440px] p-[15px] rounded-sm">
                         saved
@@ -50,7 +52,7 @@ export default function UserPage(){
                         history
                 </TabsContent>
                 <TabsContent value="seciurty" className=" w-[100%] h-[100%] md:w-[85%] mt-[10px] bg-[white] shadow-xl md:h-[440px] p-[15px] rounded-sm">
-                    seciurty
+                    <Seciurty/>
                 </TabsContent>
             </Tabs>
            
