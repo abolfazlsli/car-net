@@ -5,9 +5,12 @@ import { SearchIcon } from "lucide-react"
 const InputC = ({text , placeholder , onChange , value , type}) => {
     return (
         <div className="flex flex-col w-[100%]">
-            <h3 className="text-right p-[10px]">
-                {text}
-            </h3>
+            {
+                text?.length > 0 ?
+                <h3 className="text-right p-[10px]">
+                    {text}
+                </h3>:<></>
+            }
             {
                 type === "password" ? 
                 <div className="w-[100%] relative">

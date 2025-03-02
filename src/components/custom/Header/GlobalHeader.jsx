@@ -32,11 +32,10 @@ const Header = () => {
     const dispatch = useDispatch()
     return (
         <>
-            <div className="flex justify-between p-[15px] shadow-md bg-white w-[100%]">
+            <div className="flex justify-between items-center p-[15px] shadow-md bg-white w-[100%]">
                 <div className="">
                     {userinfo.token ?
                     <>
-                      
                         <Popover>
                             <PopoverTrigger>
                                 <Button className="bg-amber-500">
@@ -109,11 +108,10 @@ const Header = () => {
                     </Button>
                   </>
                        }
-                    
                 </div>
-                
-                <ToastContainer/>
+                <img src="logo.png" className="w-[10%]" />
             </div>
+            <ToastContainer/>
         </>
     )
 }
