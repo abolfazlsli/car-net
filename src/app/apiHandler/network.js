@@ -20,5 +20,12 @@ export const network = {
         return axios.post(
         `${apiurl}${url}` , data
     )
-}
+    } , 
+    get : (url,data=new FormData()) =>  {
+            data = generateFormData(data)
+            data.append("apikey" , apikey) 
+            return axios.get(
+            `${apiurl}${url}` , data
+        )
+    }
 }

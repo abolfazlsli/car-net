@@ -11,7 +11,9 @@ const Seciurty = () => {
         <div className="w-[100%] flex justify-center">
             <div className="w-[50%]">
                 <InputC type="password"  placeholder = "رمز عبور قبلی"  />
+                <br/>
                 <InputC  type="password" placeholder = "رمز عبور قبلی"  />
+                <br/>
                 <InputC  type="password" placeholder = "رمز عبور قبلی"  />
                 <div className="m-[5px] w-[100%] md:w-[100%]">
                     <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px]" >

@@ -21,3 +21,6 @@ export const EditUserInfo = (data) =>
 
 export const GetActivty = (data) => 
     network.post("/users/send/activiy" , data)
+
+export const GetCarsBrands = () => 
+    network.get("/cars/brands")
