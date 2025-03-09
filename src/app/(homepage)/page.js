@@ -32,7 +32,7 @@ export default function Page() {
                         animation={0.3}
                         maxCount={2}
                         variant="default"
-                        className="bg-white w-[100%] md:w-[350px] overflow-y-scroll rounded-full" 
+                        className="bg-white w-[100%] md:w-[350px] rounded-full" 
                         bagstyle = "!flex-nowrap"
                     />
                 </div>
