@@ -6,12 +6,14 @@ import RedWrong from "@/components/icons/Wrong"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 const UserActivity = () => {
     const [pagedata ,setPageData] = useState([])
+    const reduxtoken = useSelector(state => state.userinfo.token)
     useEffect(() => {
         let data={
-            token : token
+            token : token?token:reduxtoken
         }
         GetActivty(data).then(
             res => {
