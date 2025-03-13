@@ -14,7 +14,7 @@ const InputC = ({text , placeholder , onChange , value , type}) => {
             {
                 type === "password" ? 
                 <div className="w-[100%] relative">
-                    <Button className="absolute rounded-l-full left-[0px] bg-amber-500">
+                    <Button className="absolute rounded-l-full left-[0px] bg-amber-500" title="نمایش رمز عبور">
                         <Eye/>
                     </Button>
                     <Input type={type} className="text-right rounded-full outline-hidden bg-white " placeholder={placeholder} onChange={onChange} value={value} />
@@ -22,7 +22,7 @@ const InputC = ({text , placeholder , onChange , value , type}) => {
                 : type === "search" ? 
                 <>
                     <div className="w-[100%] relative">
-                    <Button className="absolute rounded-l-full left-[0px] bg-amber-500">
+                    <Button className="absolute rounded-l-full left-[0px] bg-amber-500" title="جستجو">
                         <SearchIcon/>
                     </Button>
                     <Input type={type} className="text-right rounded-full outline-hidden bg-white" placeholder={placeholder} onChange={onChange} value={value} />
