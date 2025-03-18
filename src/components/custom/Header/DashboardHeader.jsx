@@ -7,15 +7,18 @@ import Image from "next/image"
 import PenC  from "@/components/icons/pen"
 import { useSelector } from "react-redux"
 import { Suspense } from "react"
+import Link from "next/link"
 const HeaderD = () => {
     const userinfo = useSelector((state) => state.userinfo)
     return (
         <>
             <div className={"w-[100%] relative bg-[white] h-[150px] p-[10px] defaulbg"}>
                 <div className="flex">
-                    <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]">
-                        <ShopIcon className='w-[30px] h-[30px]'/>
-                    </Button>
+                    <Link href="/dashboard/addshop">
+                        <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]">
+                            <ShopIcon className='w-[30px] h-[30px]'/>
+                        </Button>
+                    </Link>
                     <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]">
                         <PenC className='w-[30px] h-[30px]' />
                     </Button>

@@ -3,7 +3,6 @@ import Seciurty from "@/components/custom/tabs/Seciurty"
 import UserActivity from "@/components/custom/tabs/UserActivity"
 import UserInfo from "@/components/custom/tabs/UsersInfoTab"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { useState } from "react"
 export default function UserPage(){
     const [activetab , setTab] = useState("userinfo")
