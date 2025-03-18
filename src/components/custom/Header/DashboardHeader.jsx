@@ -14,8 +14,8 @@ const HeaderD = () => {
         <>
             <div className={"w-[100%] relative bg-[white] h-[150px] p-[10px] defaulbg"}>
                 <div className="flex">
-                    <Link href="/dashboard/addshop">
-                        <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]">
+                    <Link href="/dashboard/shops">
+                        <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]" title="فروشگاه">
                             <ShopIcon className='w-[30px] h-[30px]'/>
                         </Button>
                     </Link>

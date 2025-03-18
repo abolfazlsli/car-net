@@ -24,3 +24,16 @@ export const GetActivty = (data) =>
 
 export const GetCarsBrands = () => 
     network.get("/cars/brands")
+
+
+export const GetShops = () => 
+    network.get("/shops/get")
+
+export const CheckShop = (data) => 
+    network.post("/shops/checkshop" , data) 
+
+export const AddShop = (data) => 
+    network.post("/shops/add" , data)
+
+// export const UpdateShop = (data) => 
+//     network.put("/shops/update" , data)
