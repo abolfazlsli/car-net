@@ -16,6 +16,7 @@ import AddImage from "@/components/icons/AddImage"
 import Person from "@/components/icons/Person"
 import AddPerson from "@/components/icons/AddPerson"
 import { EditImageIcon } from "@/components/icons/Edits"
+import { DeleteImage } from "@/components/icons/Delete"
  
 const AddShopCp = () => {
     const router = useRouter()
@@ -58,33 +59,37 @@ const AddShopCp = () => {
                             <div className="overflow-y-scroll h-[400px] p-[5px] md:h-[300px] md:overflow-auto">
                                 <input type="file" accept="image/*" id="addbanner" hidden onChange={e => handelImage(e , "banner")} />
                                 <input type="file" accept="image/*" id="addprofile" hidden onChange={e => handelImage(e , "profile")} />
-                                <div className="relative w-[100%] h-[100px] bg-amber-300 flex justify-center items-center cursor-pointer rounded-md">
-                                    <Label htmlFor="addbanner">
+                                <div className="relative w-[100%] h-[100px] bg-amber-300 flex justify-center items-center cursor-pointer rounded-xl">
+                                    
                                         {
                                             pagedata.banner ? (
                                                 <>
-                                                    <img src={pagedata.banner} alt ="banner" className="w-[720px] h-[100px] object-cover rounded-md" />
-                                                    <EditImageIcon className="w-[50px] h-[50px] absolute text-white fill-white top-2 cursor-pointer"/>
+                                                    <Label htmlFor="addbanner">
+                                                        <img src={pagedata.banner} alt ="banner" className="w-[720px] h-[100px] object-cover rounded-xl" />
+                                                        <EditImageIcon className="w-[50px] h-[50px] absolute text-white fill-white top-2 cursor-pointer"/>
+                                                    </Label>     
+                                                    
+                                                    <DeleteImage className="w-[50px] h-[50px] absolute text-white fill-white top-2 left-16 cursor-pointer" onClick={e => setPageData({...pagedata , banner : null})}/>
                                                 </>
                                             ) : <>
+                                               <Label htmlFor="addbanner">
                                                     <div className="flex justify-center items-center">
                                                         <AddImage className="w-[50px] h-[50px] fill-white text-white" />
                                                         <h1 className="text-white pl-[20px]">
                                                             افزودن عکس بنر برای فروشگاه
                                                         </h1>
                                                     </div>
+                                                    </Label>
                                                 </>
                                         }
-                                        
-                                    </Label>
                                     <Label htmlFor="addprofile">
                                         {
                                             pagedata.profile ? (
-                                                <div className="absolute bg-amber-300 rounded-full p-[5px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:h-[100px] flex justify-center items-center md:bottom-[-50px] md:right-10 ring-4 ring-white">
-                                                    <img src={pagedata.profile} className=" w-[100%] h-[100%] rounded-full md:w-[100%] md:h-[100%] fill-white text-white" />
+                                                <div className="absolute bg-amber-300 rounded-full p-[0px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:h-[100px] flex justify-center items-center left-[20%] md:left-auto md:bottom-[-50px] md:right-10 ring-4 ring-white">
+                                                    <img src={pagedata.profile} className=" w-[100%] h-[100%] rounded-full md:w-[100%] md:h-[100%]" />
                                                 </div>
                                             ) : <>
-                                                    <div className="absolute bg-amber-300 rounded-full p-[10px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:h-[100px] flex justify-center items-center md:bottom-[-50px] md:right-10 ring-4 ring-white">
+                                                    <div className="absolute bg-amber-300 rounded-full p-[10px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:left-auto left-[20%] md:h-[100px] flex justify-center items-center md:bottom-[-50px] md:right-10 ring-4 ring-white">
                                                     <AddPerson className=" w-[100px] h-[100px] md:w-[50px] md:h-[50px] fill-white text-white" />
                                                     </div>
                                                 </>
@@ -121,7 +126,7 @@ const AddShopCp = () => {
 
                             <div className="md:flex md:flex-row md:gap-2 flex flex-col-reverse gap-2">
                             <InputC type="tel" placeholder="آدرس فروشگاه" text="آدرس فروشگاه" onChange={e => setPageData({...pagedata , address : e.target.value})} value={pagedata.address} />
-                                <div className="w-[100%] ml-[10px]">
+                                <div className="w-[100%] md:ml-[10px]">
                                     <h3 className="m-[10px] text-right w-[95%]" >
                                         بیوگرافی یا توضیحات
                                     </h3>
