@@ -11,3 +11,4 @@ export const bio =
 
 export const name =
   typeof window !== "undefined" ? localStorage.getItem("name") : false;
+

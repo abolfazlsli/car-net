@@ -35,5 +35,9 @@ export const CheckShop = (data) =>
 export const AddShop = (data) => 
     network.post("/shops/add" , data)
 
+
+export const sendFile = (data) => 
+    network.postfile("/files/write/shop" , data)
+
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)
