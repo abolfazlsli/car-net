@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const apiurl = process.env.NEXT_PUBLIC_API_URL
+export const apiurl = process.env.NEXT_PUBLIC_API_URL
 const apikey = process.env.NEXT_PUBLIC_API_KEY
 
 
@@ -37,6 +37,7 @@ export const network = {
     } , 
     delete : (url , data) => {
         // data.append("apikey" , apikey) 
+        console.log(data)
         data.apikey = apikey
         return axios.delete(
             `${apiurl}${url}` , data

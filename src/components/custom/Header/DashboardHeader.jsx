@@ -6,13 +6,19 @@ import { defaultBg } from "./assets/Union.png"
 import Image from "next/image"
 import PenC  from "@/components/icons/pen"
 import { useSelector } from "react-redux"
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
 import Link from "next/link"
-const HeaderD = () => {
+import AddPerson from "@/components/icons/AddPerson"
+import AddImage from "@/components/icons/AddImage"
+import { getShopData } from "@/app/apiHandler/apis"
+const HeaderD = ({page}) => {
     const userinfo = useSelector((state) => state.userinfo)
+    const [pagedata , setPageData] = useState(null)
     return (
         <>
-            <div className={"w-[100%] relative bg-[white] h-[150px] p-[10px] defaulbg"}>
+        {
+            page === "dashboard" ? <>
+                <div className={"w-[100%] relative bg-[white] h-[150px] p-[10px] defaulbg"}>
                 <div className="flex">
                     <Link href="/dashboard/shops">
                         <Button className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-amber-500 m-[10px]" title="فروشگاه">
@@ -41,6 +47,12 @@ const HeaderD = () => {
                 </div>
                 </Suspense>
             </div>
+            </> : <>
+            <h1>
+                unkow page
+            </h1>
+            </>
+        }
         </>
     )
 }

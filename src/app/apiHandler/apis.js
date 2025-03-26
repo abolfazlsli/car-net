@@ -36,8 +36,25 @@ export const AddShop = (data) =>
     network.post("/shops/add" , data)
 
 
-export const sendFile = (data) => 
+export const sendFileShop = (data) => 
     network.postfile("/files/write/shop" , data)
 
+
+export const getShopData = (data) =>
+    network.post("/shops/getshop" , data)
+
+
+export const getFile = (data) => 
+    network.post("/files/read" , data)
+
+
+
+export const editFile = (data) => 
+    network.postfile("/files/edit/shop" , data)
+
+export const deleteFile = (data) => 
+    network.post("/files/delete" ,data)
+export const editShopPicData = (data) => 
+    network.post("/shops/editpics" , data)
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)
