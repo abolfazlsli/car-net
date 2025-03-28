@@ -105,14 +105,14 @@ const ShopHeader = () => {
     return (
         <>
          <div className="w-[100%] flex relative items-center justify-center">
-            <div className="w-[100%] h-[200px] bg-amber-300 flex justify-center items-center rounded-b-xl shadow-md">
+            <div className="w-[100%] md:h-[200px] h-[100px] bg-amber-300 flex justify-center items-center rounded-b-xl shadow-md">
                 {
                     picsdata.banner ? <>
                         <div className="relative w-[100%]">
                             <Label htmlFor="changebanner">
                                 <input type="file" id="changebanner" hidden onChange={e => handelChangePrePic(e , "banner")} />
                                 <EditImageIcon className="absolute text-white w-[50px] h-[50px] top-3 left-3 cursor-pointer"/>
-                                <img src={picsdata.banner} className="w-[100%] h-[200px] rounded-b-xl object-cover" />
+                                <img src={picsdata.banner} className="w-[100%] md:h-[200px] h-[100px] rounded-b-xl object-cover" />
                             </Label>
                             <DeleteImage className="absolute text-white w-[50px] h-[50px] top-3 left-20 cursor-pointer" onClick={() => deleteHandler("banner")} />
                         </div>
@@ -130,7 +130,7 @@ const ShopHeader = () => {
             
             
             </div>
-            <div className="w-[200px] h-[200px] rounded-full ring-2 ring-white bg-amber-300 absolute right-10 top-[80px] flex justify-center items-center" >
+            <div className="md:w-[200px] md:h-[200px] w-[100px] h-[100px] rounded-full ring-2 ring-white bg-amber-300 absolute md:right-10 md:top-[80px] right-2 top-[40px] flex justify-center items-center" >
                 {
                     picsdata.profile ? <>
                         <img src={picsdata.profile} className="w-[100%] h-[100%] rounded-full object-cover" />
