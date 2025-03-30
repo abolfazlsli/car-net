@@ -1,4 +1,5 @@
 "use client"
+import InputC from "@/components/custom/input-c"
 import {
     Dialog,
     DialogContent,
@@ -30,7 +31,7 @@ const AddCarPage  = () => {
                       افزودن خودرو
                   </DialogTitle>
                   <DialogDescription>
-                    
+                      <InputC text={""}/>
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
