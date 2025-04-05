@@ -56,5 +56,8 @@ export const deleteFile = (data) =>
     network.post("/files/delete" ,data)
 export const editShopPicData = (data) => 
     network.post("/shops/editpics" , data)
+
+export const getBrandFilds = (data) => 
+    network.post("/cars/getbrandfilds" , data)
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)
