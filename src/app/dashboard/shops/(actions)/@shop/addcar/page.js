@@ -38,7 +38,8 @@ const AddCarPage = () => {
     brands: [],
     filds: null,
     setep: 1 , 
-    senders : null
+    pics : null , 
+    datas : null
   })
 
   useEffect(() => {
@@ -51,8 +52,21 @@ const AddCarPage = () => {
   }, [])
 
   const sendHandler = (d) => {
-    const data = d
-    console.log(data)
+    const picdata = []
+    const fieldData = []
+    pagedata.filds.map(
+      item => {
+        fieldData.push(
+          {
+            fieldtype : item.fieldtype ,
+            fieldname : item.fieldname ,
+            fieldvalue : d[item.fieldname] ,
+            fieldlabel : item.fieldlabel
+          }
+        )
+      }
+    )
+    setPageData({...pagedata , datas : fieldData})
   }
   const handelClose = () => {
     router.back()
@@ -72,7 +86,7 @@ const AddCarPage = () => {
     <div>
       {pagedata.setep === 1 ? (
         <Dialog open={true} onOpenChange={handelClose}>
-          <DialogContent>
+          <DialogContent className="max-w-[600px]">
             <DialogHeader>
               <DialogTitle>افزودن خودرو</DialogTitle>
               <DialogDescription>
@@ -94,9 +108,9 @@ const AddCarPage = () => {
                         </div>
                       </SelectContent>
                     </Select>
-
                     {pagedata.filds &&
-                      pagedata.filds.map((f, index) =>
+                    <div className="h-[400px] overflow-y-scroll">
+                      {pagedata.filds.map((f, index) =>
                         f.fieldtype === "select" ? (
                           <div key={index} className="mt-[10px] mb-[10px]">
                             <h1 className="text-right mt-[5px] mb-[5px]">
@@ -161,15 +175,25 @@ const AddCarPage = () => {
                         </div>
                          : null
                       )}
+                      </div>
+                      }
 
                     <div className="flex justify-center items-center">
                       <Button
                         className="bg-amber-500 w-[100%] rounded-full mt-[20px]"
+                        type="submit"
                         onClick={(e) => {
-                          console.log(pagedata)
                         }}
                       >
-                        گام بعد
+                        ثبت
+                      </Button>
+                      <Button
+                        className="bg-amber-300 w-[100%] rounded-full mt-[20px] ml-[10px]"
+                        onClick={(e) => {
+                          handelClose()
+                        }}
+                      >
+                        لغو
                       </Button>
                     </div>
                   </form>
@@ -178,18 +202,7 @@ const AddCarPage = () => {
             </DialogHeader>
           </DialogContent>
         </Dialog>
-      ) : pagedata.setep === 2 ? (
-        <Dialog open={true} onOpenChange={handelClose}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>افزودن خودرو</DialogTitle>
-              <DialogDescription>
-                <Select onValueChange={(e) => changeBrandHandler(e)}></Select>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      ) : null}
+      ) :  null}
     </div>
   )
 }

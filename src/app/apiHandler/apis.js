@@ -59,5 +59,8 @@ export const editShopPicData = (data) =>
 
 export const getBrandFilds = (data) => 
     network.post("/cars/getbrandfilds" , data)
+
+export const sendCars = (data) =>
+    network.post("/cars/addcar" , data)
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)
