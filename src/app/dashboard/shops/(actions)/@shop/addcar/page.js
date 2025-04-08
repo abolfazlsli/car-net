@@ -10,6 +10,8 @@ import {
     DialogTitle,
   } from "@/components/ui/dialog"
 
+  import { Badge } from "@/components/ui/badge" 
+
   import {
     Select,
     SelectContent,
@@ -30,7 +32,8 @@ const AddCarPage  = () => {
     {
       brands : [] ,
       filds : null ,
-      senders : null
+      senders : null ,
+      setep : 1
     }
   )
   useEffect(
@@ -40,7 +43,7 @@ const AddCarPage  = () => {
           
           setPageData(
             {
-              ...pagedata , brands : res.data.apidata 
+              ...pagedata , brands : res.data.apidata
             }
           )
         }
@@ -78,6 +81,7 @@ const AddCarPage  = () => {
   }
     return (
         <div>
+          {pagedata.setep === 1 ? <>
             <Dialog open={true} onOpenChange={handelClose}>
               <DialogContent>
                 <DialogHeader>
@@ -85,7 +89,7 @@ const AddCarPage  = () => {
                       افزودن خودرو
                   </DialogTitle>
                   <DialogDescription>
-                      <Select onValueChange={e => changeBrandHandler(e)}>
+                      <Select onValueChange={(e) => changeBrandHandler(e)}>
                         <div className="pt-[10px] pb-[10px]">
                           <SelectTrigger className="rounded-full text-right">
                             <SelectValue placeholder="ماشینت چیه ؟" />
@@ -95,8 +99,8 @@ const AddCarPage  = () => {
                           <div className="pt-[10px] pb-[10px]">
                             {
                               pagedata.brands.map(
-                                e => (
-                                  <SelectItem value={e.value}>
+                                (e , index) => (
+                                  <SelectItem value={e.value} key={index}>
                                     {e.label}
                                   </SelectItem>
                                 )
@@ -108,16 +112,16 @@ const AddCarPage  = () => {
                       {
                         pagedata.filds ? 
                         pagedata.filds.map(
-                          e => (
+                          (e , index) => (
                               e.fieldtype === "select" ?
-                              <>
+                              <div key={index}>
                               <h1 className="text-right w-[100%] pr-[10px]">
                                 {e.fieldlabel}
                               </h1>
                                <Select>
                                 <div className="pt-[10px] pb-[10px]">
                                   <SelectTrigger className="rounded-full text-right">
-                                    <SelectValue placeholder="ماشینت چیه ؟" />
+                                    <SelectValue placeholder={e.fieldlabel} />
                                   </SelectTrigger>
                                 </div>
                                 <SelectContent>
@@ -136,6 +140,28 @@ const AddCarPage  = () => {
                                   </div>
                                 </SelectContent>
                               </Select>
+                              </div> : e.fieldtype === "color" ? <>
+                                <h1 className="text-right w-[100%] pr-[10px]">
+                                  رنگ
+                                </h1>
+                                <div className="flex w-[100%] justify-center items-center">
+                                      {
+                                        e.options.map(
+                                          (color , index) => (
+                                            <>
+                                            <div className={`w-[50px] h-[50px] rounded-full m-[10px] shadow-md ring-1 ring-gray-200 cursor-pointer ${pagedata.senders.filter(
+                                              item => item.name === "color" 
+                                            ).value ===color.value ? "ring-4" : "" }` } style={{backgroundColor:color.value}} onClick={e => setPageData({...pagedata , senders : [...pagedata.senders , {name : "color" , value : color.value , type : "color" , label : "رنگ" }]})}></div>
+                                              {/* <Badge className={`bg-${color.value}-400`} key={index}>
+                                                {
+                                                  color.text
+                                                }
+                                              </Badge> */}
+                                            </>
+                                          )
+                                        )
+                                      }
+                                  </div>
                               </> : <></>
                           )
                         )
@@ -150,6 +176,27 @@ const AddCarPage  = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+          </> : pagedata.setep === 2 ? <>
+          <Dialog open={true} onOpenChange={handelClose}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>
+                      افزودن خودرو
+                  </DialogTitle>
+                  <DialogDescription>
+                      <Select onValueChange={(e) => changeBrandHandler(e)}>
+                      </Select>
+                      <div className="flex justify-center items-center">
+                        <Button className="bg-amber-500 w-[100%] rounded-full mt-[20px]" onClick = {e => {console.log(pagedata)}}>
+                          گام بعد
+                        </Button>
+                      </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </> : <></>}
+           
 
         </div>
     )
