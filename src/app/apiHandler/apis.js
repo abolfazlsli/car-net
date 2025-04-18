@@ -62,5 +62,9 @@ export const getBrandFilds = (data) =>
 
 export const sendCars = (data) =>
     network.post("/cars/addcar" , data)
+
+
+export const sendCarAssets = (data) => 
+    network.postfile("/files/write/cars" , data)
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)

@@ -14,6 +14,7 @@ import { useSelector , useDispatch } from "react-redux";
 import { ToastContainer , toast } from "react-toastify";
 import { RegisterUser } from "@/app/apiHandler/apis";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { setCookie } from "cookies-next/client";
 
 
 const GetPhonePass = () => {
@@ -36,8 +37,8 @@ const GetPhonePass = () => {
                 RegisterUser(select).then(
                     res => {
                         console.log(res)
-                        localStorage.setItem("token" , res.data.apidata.token)
-                        localStorage.setItem("name" , res.data.apidata.name)
+                        setCookie("token" , res.data.apidata.token , {maxAge : 2592000 })
+                        setCookie("name" , res.data.apidata.name , {maxAge : 2592000})
                         dispatch({
                             type:"CHANGE_NAME_USERDATA" , payload : "test"
                         })

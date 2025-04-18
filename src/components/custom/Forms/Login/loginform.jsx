@@ -14,6 +14,7 @@ import chnagedata from "@/app/actions/changedata";
 import { network } from "@/app/apiHandler/network";
 import { LoginUser } from "@/app/apiHandler/apis";
 import { toast, ToastContainer } from "react-toastify";
+import { setCookie } from "cookies-next/client";
 
 
 
@@ -34,8 +35,8 @@ const LoginForm = () => {
        LoginUser(data).then(
         res => {
             console.log(res)
-            localStorage.setItem("token" , res.data.token)
-            localStorage.setItem("name" , res.data.name)
+            setCookie("token" , res.data.token  , {maxAge: 2592000 })
+            setCookie("name" , res.data.name , {maxAge : 2592000 })
             dispatch({
                 type:"CHANGE_NAME_USERDATA" , payload : res.data.name
             })

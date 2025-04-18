@@ -1,5 +1,5 @@
 "use client"
-import { getBrandFilds, GetCarsBrands } from "@/app/apiHandler/apis"
+import { getBrandFilds, GetCarsBrands, sendCarAssets, sendCars } from "@/app/apiHandler/apis"
 import InputC from "@/components/custom/input-c"
 import { Button } from "@/components/ui/button"
 import {
@@ -30,16 +30,29 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import AddImage from "@/components/icons/AddImage"
+import { Label } from "@radix-ui/react-label"
+import { token } from "@/app/redusers/data"
+import { toast } from "react-toastify"
 
 const AddCarPage = () => {
   const form = useForm()
   const router = useRouter()
+  const [picaddres , setPicAddres] = useState([])
+  const [picsfile , setPicsFile] = useState([])
   const [pagedata, setPageData] = useState({
     brands: [],
     filds: null,
     setep: 1 , 
-    pics : null , 
-    datas : null
+    datas : null ,
+    brandid : null ,
+    title : null , 
+    description : null ,
+    price : 0 ,
+    model : 0,
+    token : token ,
+    imagecover : ""
   })
 
   useEffect(() => {
@@ -51,8 +64,12 @@ const AddCarPage = () => {
     })
   }, [])
 
-  const sendHandler = (d) => {
-    const picdata = []
+
+  const setDataHandler = (d) => {
+    const saveandclose = () => {
+      toast.success("ماشین شما با موفقیت ثبت شد") 
+      router.back()
+    }
     const fieldData = []
     pagedata.filds.map(
       item => {
@@ -61,12 +78,46 @@ const AddCarPage = () => {
             fieldtype : item.fieldtype ,
             fieldname : item.fieldname ,
             fieldvalue : d[item.fieldname] ,
-            fieldlabel : item.fieldlabel
+            fieldlabel : item.fieldlabel,
           }
         )
       }
     )
-    setPageData({...pagedata , datas : fieldData})
+    setPageData({...pagedata, datas : fieldData, brandid : pagedata.brandid ,title : pagedata.title , description : pagedata.description , imagecover : picsfile[0].name})
+    // console.log(pagedata , picaddres , picsfile)
+    sendCars({...pagedata, datas : fieldData, brandid : pagedata.brandid ,title : pagedata.title , description : pagedata.description , imagecover : picsfile[0].name}).then(
+      res => {
+        console.log(res)
+        const carid = res.data.carid
+        sendCarAssets({
+          token : token ,
+          carid : carid ,
+          ...picsfile
+        }).then(
+          res => {
+            res.data.apidata === "files saved" ? 
+               saveandclose()
+             : toast.error("مشکل در ذخیره سازی فایل")
+
+          }
+        )
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
+  }
+  const addPicHandler = (data) => {
+    let picaddrestemp = [...picaddres]
+    let picfilestemp = [...picsfile]
+    const file = data.target.files[0]
+    const imageurl = URL.createObjectURL(file)
+    picaddrestemp.push(imageurl)
+    picfilestemp.push(file)
+    setPicAddres(picaddrestemp)
+    setPicsFile(picfilestemp)
+    
   }
   const handelClose = () => {
     router.back()
@@ -77,7 +128,7 @@ const AddCarPage = () => {
       setPageData({
         ...pagedata,
         filds: res.data.data,
-
+        brandid : e
       })
     })
   }
@@ -91,7 +142,46 @@ const AddCarPage = () => {
               <DialogTitle>افزودن خودرو</DialogTitle>
               <DialogDescription>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(sendHandler)}>
+                  <form onSubmit={form.handleSubmit(setDataHandler)}>
+                    <h1 className="text-right mb-[10px] mt-[10px]">
+                      موضوع 
+                    </h1>
+                    <Input type="text" className="rounded-full text-right mb-[10px]" placeholder="موضوع آگهی را وارد کنید " value={pagedata.title} onChange={e => setPageData({...pagedata , title : e.target.value})} />
+                    <div className="w-[100%] flex justify-center items-center">
+                      <div className="w-[50%]">
+                        <h1 className="text-right mb-[10px] mt-[10px]">
+                          قیمت 
+                        </h1>
+                        <Input type="text" className="rounded-full text-right mb-[10px]" placeholder="قیمت خودرو را وارد کنید " value={pagedata.price} onChange={e => setPageData({...pagedata , price : e.target.value})} />
+                      </div>
+                      <div className="w-[50%] ml-[10px]">
+                        <h1 className="text-right mb-[10px] mt-[10px]">
+                          مدل 
+                        </h1>
+                        <Input type="text" className="rounded-full text-right mb-[10px]" placeholder="مدل خودرو را وارد کنید " value={pagedata.model} onChange={e => setPageData({...pagedata , model : e.target.value})} />
+                      </div>
+                    </div>
+                    <div className="w-[100%] h-[50px] ring-1 ring-gray-200 mb-[20px] rounded-xl overflow-x-auto flex justify-end items-center flex-wrap p-[5px]">
+                      {
+                        picaddres.map(
+                          (pic , index) => (
+                            <div className="w-[40px] h-[40px] flex justify-center items-center mr-[5px]">
+                            <img src={pic} key={index} className="w-[90%] h-[90%] object-fill rounded-md" />
+                            </div>
+                          )
+                        )
+                      }
+                      <div className="ring-1 ring-gray-200 w-[40px] h-[40px] rounded-md cursor-pointer flex justify-center items-center">
+                      <input type="file" hidden id="imageholder" onChange={e => addPicHandler(e)}/>
+                      <Label htmlFor="imageholder">
+                        <AddImage className='w-[95%] h-[95%]'/>
+                      </Label>
+                      </div>
+                    </div>
+                    <h1 className="text-right mb-[10px] mt-[10px]">
+                        توضیحات
+                    </h1>
+                    <Textarea className="resize-none w-[100%] h-[100px] text-right" value={pagedata.description} onChange={e => setPageData({...pagedata , description : e.target.value})} placeholder="توضیحات اگهی" />
                     <Select onValueChange={(e) => changeBrandHandler(e)}>
                       <div className="pt-[10px] pb-[10px]">
                         <SelectTrigger className="rounded-full text-right">
@@ -108,8 +198,9 @@ const AddCarPage = () => {
                         </div>
                       </SelectContent>
                     </Select>
+                    
                     {pagedata.filds &&
-                    <div className="h-[400px] overflow-y-scroll">
+                    <div className="h-[150px] overflow-y-scroll">
                       {pagedata.filds.map((f, index) =>
                         f.fieldtype === "select" ? (
                           <div key={index} className="mt-[10px] mb-[10px]">

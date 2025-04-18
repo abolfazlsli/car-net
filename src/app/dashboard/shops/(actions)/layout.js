@@ -3,10 +3,11 @@ import "@/app/fonts/style.css"
 import { CheckShop } from "@/app/apiHandler/apis"
 import { useEffect , useState } from "react"
 import { ToastContainer } from "react-toastify"
+import { getCookie } from "cookies-next"
 export default function DashboardsLayout({ addshop , shop }){
     const [hasshop , setHasShop] = useState(null)
     const checkShop = async () => {
-        await CheckShop({token : localStorage.getItem("token")}).then(
+        await CheckShop({token : getCookie("token")}).then(
             res => {
                 setHasShop(true)
             }
