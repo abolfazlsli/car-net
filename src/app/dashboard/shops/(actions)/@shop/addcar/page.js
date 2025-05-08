@@ -9,6 +9,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+
 import { Badge } from "@/components/ui/badge"
 import {
     Form,
@@ -171,6 +172,7 @@ const AddCarPage = () => {
                           )
                         )
                       }
+                      
                       <div className="ring-1 ring-gray-200 w-[40px] h-[40px] rounded-md cursor-pointer flex justify-center items-center">
                       <input type="file" hidden id="imageholder" onChange={e => addPicHandler(e)}/>
                       <Label htmlFor="imageholder">

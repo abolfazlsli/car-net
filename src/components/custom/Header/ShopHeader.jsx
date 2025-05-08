@@ -62,7 +62,7 @@ const ShopHeader = () => {
         getShopData(data).then(
             res => {
                 console.log(res)
-                setPicsData({...picsdata , banner : res.data.apidata.banner?  `${apiurl}/files/read/${res.data.apidata.banner}` : null , profile : res.data.apidata.profilepic?  `${apiurl}/files/read/${res.data.apidata.profilepic}` : null })
+                setPicsData({...picsdata , banner : res.data.apidata.banner?  `${apiurl}/files/${res.data.apidata.banner}` : null , profile : res.data.apidata.profilepic?  `${apiurl}/files/${res.data.apidata.profilepic}` : null })
             }
         ).catch(
             err => {

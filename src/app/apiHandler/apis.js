@@ -66,5 +66,13 @@ export const sendCars = (data) =>
 
 export const sendCarAssets = (data) => 
     network.postfile("/files/write/cars" , data)
+
+export const uploadFile = (file) => {
+    let formdata = new FormData()
+    formdata.append('file' , file)
+    return network.post("/files/" , formdata)
+}
+
+
 // export const UpdateShop = (data) => 
 //     network.put("/shops/update" , data)

@@ -9,7 +9,7 @@ import {
  import { useRouter } from "next/navigation"
  import InputC from "../../input-c"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@radix-ui/react-label"
 import AddImage from "@/components/icons/AddImage"
@@ -18,11 +18,12 @@ import AddPerson from "@/components/icons/AddPerson"
 import { EditImageIcon } from "@/components/icons/Edits"
 import { DeleteImage } from "@/components/icons/Delete"
 import { FillX } from "@/components/icons/x"
-import { sendFile } from "@/app/apiHandler/apis"
+import { sendFile, uploadFile } from "@/app/apiHandler/apis"
 import { token } from "@/app/redusers/data"
 import { AddShop } from "@/app/apiHandler/apis"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
+import { Loader2Icon, LoaderPinwheel } from "lucide-react"
 const AddShopCp = () => {
     const router = useRouter()
     const profilePageHandler = () => {
@@ -35,6 +36,11 @@ const AddShopCp = () => {
     console.log(tokenselector.token)
     const tok = token ? token : tokenselector.token
     const [profilepage , setProfilePage] = useState(false)
+    const profile = useRef()
+    const banner = useRef()
+    const loadref = useRef(false)
+    const profileloadref = useRef(false)
+    const [flag , setFlag] = useState(true)
     const [pagedata , setPageData] = useState(
         {
             name : "" , 
@@ -52,51 +58,35 @@ const AddShopCp = () => {
         const file = e.target.files[0]
         if (file){
             const imageurl = URL.createObjectURL(file)
-            setPageData({...pagedata , ["pre" + type] : imageurl , [type] : file})
+            setPageData({...pagedata , ["pre" + type] : imageurl})
+            type === "banner" ? loadref.current = true : profileloadref.current = true
+            uploadFile(file).then(
+                res => {
+                    type === "banner" ? banner.current = res.data.digitalname : profile.current = res.data.digitalname
+                    type === "banner" ? loadref.current = false : profileloadref.current = false
+                    setFlag(!flag)
+                }
+            ).catch(
+                () => {
+                    toast.error(
+                        "توی اپلود فایل مشکل داریم :)"
+                    )
+                    setPageData({...pagedata , ["pre" + type] : null})
+                    type === "banner" ? loadref.current = false : profileloadref.current = false
+                }
+            )
+
         }
     }
     const handelSendData = () => {
-        console.log(pagedata)
-        let sendprofile = false
-        let sendbanner = false
-        let generateshop = false
-        if (pagedata.banner && pagedata.profile) { 
-            sendFile({
-                file : pagedata.banner , 
-                dicription : "عکس بنر فرشگاه" + pagedata.name , 
-                token : tok
-            }).then(
-                res => {
-                    console.log(res)
-                    sendbanner = true
-                }
-            ).catch(
-                err => {
-                    console.log(err)
-                }
-            )
-            sendFile({
-                file : pagedata.profile , 
-                dicription : "عکس پروفایل فرشگاه" + pagedata.name , 
-                token : tok
-            }).then(
-                res => {
-                    sendprofile = true
-                    console.log(res)
-                }
-            ).catch(
-                err => {
-                    console.log(err)
-                }
-            )
-        }
         let shopdata = {
             name : pagedata.name , 
             address : pagedata.address , 
             phone : pagedata.phone , 
-            profilepic : pagedata.profile.name ,
+            profilepic : profile.current ,
             bio : pagedata.bio , 
-            banner : pagedata.banner.name , 
+            banner : banner.current , 
+            shopid : `shop-${pagedata.phone}` ,
             token : tok
         }
         AddShop(shopdata).then(
@@ -138,6 +128,13 @@ const AddShopCp = () => {
                                             pagedata.prebanner ? (
                                                 <>
                                                     <Label htmlFor="addbanner">
+                                                        {
+                                                            loadref.current ? <>
+                                                                <div className="w-[100%] h-[100%] absolute bg-[#00000054] z-30 rounded-xl flex justify-center items-center">
+                                                                    <LoaderPinwheel className="animate-spin text-amber-400" />
+                                                                </div>
+                                                            </> : null
+                                                        }
                                                         <img src={pagedata.prebanner} alt ="banner" className="w-[720px] h-[100px] object-cover rounded-xl" />
                                                         <EditImageIcon className="w-[50px] h-[50px] absolute text-white fill-white top-2 cursor-pointer"/>
                                                     </Label>     
@@ -148,6 +145,11 @@ const AddShopCp = () => {
                                                <Label htmlFor="addbanner">
                                                     <div className="flex justify-center items-center">
                                                         <AddImage className="w-[50px] h-[50px] fill-white text-white" />
+                                                        {
+                                                            loadref.current ? <>
+                                                                <div className="w-[100%] h-[100%] absolute bg-[#00000054] z-30 rounded-xl"></div>
+                                                            </> : null
+                                                        }
                                                         <h1 className="text-white pl-[20px]">
                                                             افزودن عکس بنر برای فروشگاه
                                                         </h1>
@@ -160,6 +162,13 @@ const AddShopCp = () => {
                                             pagedata.preprofile ? (
                                                 <div className="absolute bg-amber-300 rounded-full p-[0px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:h-[100px] flex justify-center items-center left-[20%] md:left-auto md:bottom-[-50px] md:right-10 ring-4 ring-white">
                                                     <Label htmlFor="addprofile" className="bg-amber-300 rounded-full p-[0px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:h-[100px] flex justify-center items-center left-[20%] md:left-auto md:bottom-[-50px] md:right-10 ring-4 ring-white">
+                                                        {
+                                                            profileloadref.current ? <>
+                                                                <div className="w-[100%] h-[100%] absolute bg-[#00000054] z-30 rounded-full flex justify-center items-center">
+                                                                    <LoaderPinwheel className="animate-spin text-amber-400" />
+                                                                </div>
+                                                            </> : null
+                                                        }
                                                         <img src={pagedata.preprofile} className=" w-[100%] h-[100%] rounded-full md:w-[100%] md:h-[100%]" />
                                                         <EditImageIcon className={"absolute text-amber-300 left-4 w-[50px] h-[50px] md:bottom-[-10px] md:left-[-10px] bottom-0"} />
                                                     </Label>
@@ -167,6 +176,13 @@ const AddShopCp = () => {
                                                 </div>
                                             ) : <>
                                                     <Label htmlFor="addprofile">
+                                                        {
+                                                            profileloadref.current ? <>
+                                                                <div className="w-[100%] h-[100%] absolute bg-[#00000054] z-30 rounded-full flex justify-center items-center">
+                                                                    <LoaderPinwheel className="animate-spin text-amber-400" />
+                                                                </div>
+                                                            </> : null
+                                                        }
                                                         <div className="absolute bg-amber-300 rounded-full p-[10px] w-[200px] h-[200px] bottom-[-220px] md:w-[100px] md:left-auto left-[20%] md:h-[100px] flex justify-center items-center md:bottom-[-50px] md:right-10 ring-4 ring-white">
                                                         <AddPerson className=" w-[100px] h-[100px] md:w-[50px] md:h-[50px] fill-white text-white" />
                                                         </div>
