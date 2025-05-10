@@ -21,7 +21,7 @@ export const network = {
         return axios.post(
         `${apiurl}${url}` , data  , {
             headers : {
-                Authorization : `Bearer ${getCookie("token")}`
+                Authorization : `${getCookie("token")}`
             }
         }
     )
@@ -33,7 +33,7 @@ export const network = {
             `${apiurl}${url}` , data ,
             {
                 headers : {
-                    Authorization : `Bearer ${getCookie("token")}`
+                    Authorization : `${getCookie("token")}`
                 }
             }
         )
@@ -45,7 +45,7 @@ export const network = {
             `${apiurl}${url}` , data ,
             {
                 headers : {
-                    Authorization : `Bearer ${getCookie("token")}`
+                    Authorization : `${getCookie("token")}`
                 }
             }
         )
@@ -58,7 +58,7 @@ export const network = {
             `${apiurl}${url}` , data ,
             {
                 headers : {
-                    Authorization : `Bearer ${getCookie("token")}`
+                    Authorization : `${getCookie("token")}`
                 }
             }
         )
@@ -70,7 +70,7 @@ export const network = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Accept': 'application/json',
-                    Authorization : `Bearer ${getCookie("token")}`
+                    Authorization : `${getCookie("token")}`
                   }
             }
         )

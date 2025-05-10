@@ -112,7 +112,7 @@ const ShopHeader = () => {
                             <Label htmlFor="changebanner">
                                 <input type="file" id="changebanner" hidden onChange={e => handelChangePrePic(e , "banner")} />
                                 <EditImageIcon className="absolute text-white w-[50px] h-[50px] top-3 left-3 cursor-pointer"/>
-                                <img src={picsdata.banner} className="w-[100%] md:h-[200px] h-[100px] rounded-b-xl object-cover" />
+                                <img src={picsdata.banner} className="w-[100%] md:h-[200px] h-[100px] object-cover" />
                             </Label>
                             <DeleteImage className="absolute text-white w-[50px] h-[50px] top-3 left-20 cursor-pointer" onClick={() => deleteHandler("banner")} />
                         </div>
@@ -130,7 +130,7 @@ const ShopHeader = () => {
             
             
             </div>
-            <div className="md:w-[200px] md:h-[200px] w-[100px] h-[100px] rounded-full ring-2 ring-white bg-amber-300 absolute md:right-10 md:top-[80px] right-2 top-[40px] flex justify-center items-center" >
+            <div className="md:w-[200px] md:h-[200px] w-[100px] h-[100px] rounded-full ring-2 ring-white bg-amber-300 absolute z-40 md:right-10 md:top-[80px] right-2 top-[40px] flex justify-center items-center" >
                 {
                     picsdata.profile ? <>
                         <img src={picsdata.profile} className="w-[100%] h-[100%] rounded-full object-cover" />
@@ -140,6 +140,9 @@ const ShopHeader = () => {
                 }
                 
             </div>
+        </div>
+        <div className="w-[100%] h-[70px] bg-amber-300 rounded-b-xl rounded-br-md sticky top-0">
+
         </div>
         </>
     )

@@ -1,5 +1,5 @@
 "use client"
-import { getBrandFilds, GetCarsBrands, sendCarAssets, sendCars } from "@/app/apiHandler/apis"
+import { getBrandFilds, GetCarsBrands, sendCarAssets, sendCars, uploadFile } from "@/app/apiHandler/apis"
 import InputC from "@/components/custom/input-c"
 import { Button } from "@/components/ui/button"
 import {
@@ -28,7 +28,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -42,6 +42,7 @@ const AddCarPage = () => {
   const router = useRouter()
   const [picaddres , setPicAddres] = useState([])
   const [picsfile , setPicsFile] = useState([])
+  const filenames = useRef([])
   const [pagedata, setPageData] = useState({
     brands: [],
     filds: null,
@@ -86,26 +87,20 @@ const AddCarPage = () => {
     )
     setPageData({...pagedata, datas : fieldData, brandid : pagedata.brandid ,title : pagedata.title , description : pagedata.description , imagecover : picsfile[0].name})
     // console.log(pagedata , picaddres , picsfile)
-    sendCars({...pagedata, datas : fieldData, brandid : pagedata.brandid ,title : pagedata.title , description : pagedata.description , imagecover : picsfile[0].name}).then(
+    sendCars({...pagedata, datas : fieldData, brandid : pagedata.brandid ,title : pagedata.title , description : pagedata.description , imagecover : picsfile[0].name , images : filenames.current}).then(
       res => {
         console.log(res)
-        const carid = res.data.carid
-        sendCarAssets({
-          token : token ,
-          carid : carid ,
-          ...picsfile
-        }).then(
-          res => {
-            res.data.apidata === "files saved" ? 
-               saveandclose()
-             : toast.error("مشکل در ذخیره سازی فایل")
-
-          }
+        toast.success(
+          "ماشین با موفقیت ثبت شد"
         )
+        router.back()
       }
     ).catch(
-      err => {
-        console.log(err)
+      () => 
+      {
+        toast.error(
+          "در ثبت اگهی مشکلی پیش اومده"
+        )
       }
     )
   }
@@ -118,7 +113,17 @@ const AddCarPage = () => {
     picfilestemp.push(file)
     setPicAddres(picaddrestemp)
     setPicsFile(picfilestemp)
-    
+    uploadFile(file).then(
+      (res) => {
+        filenames.current.push(res.data.digitalname)
+      }
+    ).catch(
+      err => {
+        toast.error(
+          "در اپلود فایل مشکل پیش اومده "
+        )
+      }
+    )
   }
   const handelClose = () => {
     router.back()

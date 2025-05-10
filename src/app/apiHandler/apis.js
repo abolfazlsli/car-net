@@ -64,14 +64,17 @@ export const sendCars = (data) =>
     network.post("/cars/addcar" , data)
 
 
-export const sendCarAssets = (data) => 
-    network.postfile("/files/write/cars" , data)
+export const readMyCars = (data) => 
+    network.post("/cars/my-cars" , data)
+
 
 export const uploadFile = (file) => {
     let formdata = new FormData()
     formdata.append('file' , file)
     return network.post("/files/" , formdata)
 }
+
+
 
 
 // export const UpdateShop = (data) => 
